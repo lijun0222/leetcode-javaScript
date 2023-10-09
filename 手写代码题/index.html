@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">hello wworld</div>
+    <script>
+      function debounce(fn, wait) {
+        let timer = null;
+
+        return function () {
+          let context = this;
+          let args = arguments;
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+          timer = setTimeout(() => {
+            fn.apply(context, args);
+          }, wait);
+        };
+      }
+      const app = {
+        count: 0,
+        handleClick() {
+          this.count++;
+          console.log(`Button clicked! ${this.count}`);
+        },
+      };
+      const appElement = document.getElementById("app");
+      const debounceHandleClick = debounce(app.handleClick, 1000);
+      appElement.addEventListener("click", function () {
+        debounceHandleClick.call(app);
+      });
+    </script>
+  </body>
+</html>
